@@ -1,8 +1,9 @@
 #include "matmul.cuh"
 
-__global__ void MatMulKernel(float* A,
-                        float* B,
-                        float* C,
+template<typename T>
+__global__ void MatMulKernel(T* A,
+                        T* B,
+                        T* C,
                         const uint32_t m,
                         const uint32_t n,
                         const uint32_t k)
@@ -19,31 +20,31 @@ __global__ void MatMulKernel(float* A,
   }
 }
 
-void callMatMulKernel(float* A,
-                        float* B,
-                        float* C,
-                        const uint32_t m,
-                        const uint32_t n,
-                        const uint32_t k)
+void callMatMulKernel(Tensor* A,
+                        Tensor* B,
+                        Tensor* C)
 {
+    using type = float;
+    std::vector<uint32_t> shape_value_A = A->getShape()->getValue();
+    std::vector<uint32_t> shape_value_B = B->getShape()->getValue();    
 
-    float* d_A = NULL;
-    float* d_B = NULL;
-    float* d_C = NULL;
+    type* d_A = NULL;
+    type* d_B = NULL;
+    type* d_C = NULL;
 
-    cudaMalloc(reinterpret_cast<void**>(&d_A), sizeof(float) * m * n);
-    cudaMalloc(reinterpret_cast<void**>(&d_B), sizeof(float) * m * n);
-    cudaMalloc(reinterpret_cast<void**>(&d_C), sizeof(float) * m * n);        
+    cudaMalloc(reinterpret_cast<void**>(&d_A), A->getByte());
+    cudaMalloc(reinterpret_cast<void**>(&d_B), B->getByte());
+    cudaMalloc(reinterpret_cast<void**>(&d_C), C->getByte());        
 
-    cudaMemcpy(d_A, A, sizeof(float) * m * n, cudaMemcpyHostToDevice);
-    cudaMemcpy(d_B, B, sizeof(float) * m * n, cudaMemcpyHostToDevice);
-    cudaMemcpy(d_C, C, sizeof(float) * m * n, cudaMemcpyHostToDevice);
+    cudaMemcpy(d_A, reinterpret_cast<type*>(A->getBuffer()), A->getByte(), cudaMemcpyHostToDevice);
+    cudaMemcpy(d_B, reinterpret_cast<type*>(B->getBuffer()), B->getByte(), cudaMemcpyHostToDevice);
+    cudaMemcpy(d_C, reinterpret_cast<type*>(C->getBuffer()), C->getByte(), cudaMemcpyHostToDevice);
 
     dim3 gridDims(1, 1, 1);
     dim3 blockDims(3, 3, 1);
-    MatMulKernel<<<gridDims, blockDims>>>(d_A, d_B, d_C, m, n, k);
+    MatMulKernel<<<gridDims, blockDims>>>(d_A, d_B, d_C, shape_value_A[0], shape_value_A[1], shape_value_B[0]);
 
-    cudaMemcpy(C, d_C, sizeof(float) * m * n, cudaMemcpyDeviceToHost);
+    cudaMemcpy(C->getBuffer(), reinterpret_cast<void*>(d_C), C->getByte(), cudaMemcpyDeviceToHost);
 
     cudaFree(d_A);
     cudaFree(d_B);

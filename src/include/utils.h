@@ -7,9 +7,22 @@ typedef double              float64_t;
 typedef unsigned int        uint32_t;
 typedef unsigned char       uint8_t;
 
+enum DataType {
+    kInt8_t,
+    kInt16_t,
+    kInt32_t,
+    kInt64_t,
+    kUInt8_t,
+    kUInt16_t,
+    kUInt32_t,
+    kUInt64_t,
+    kFloat32_t,
+    kFloat64_t
+};
+
 #define SAFE_DELETE_PTR(ptr)                                                            \
         do{                                                                             \
-            if (ptr!=NULL)                                                             \
+            if (ptr!=NULL)                                                              \
                 {                                                                       \
                     delete ptr;                                                         \
                 }                                                                       \

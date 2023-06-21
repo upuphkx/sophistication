@@ -50,21 +50,16 @@ class ElementWiseOp
 {
 public:
     virtual CUDA_ELEMENTWISE_OP_RETURN_TYPE ElementWiseImpl() = 0;
-    virtual CUDA_FUNCTION_CALL_ERROR RegisterInputOutput(std::vector<ElementType> input_1, 
-                                                        std::vector<ElementType>  input_2, 
-                                                        ElementType*  output,
-                                                        uint32_t ElementNum) = 0;
+    
+    virtual CUDA_FUNCTION_CALL_ERROR ElementWiseRuntimeEnqueueImpl() = 0;
 
-    virtual CUDA_FUNCTION_CALL_ERROR RegisterInputOutput( ElementType* input_1,
-                     ElementType* input_2,
-                     ElementType* output,
-                     uint32_t rows_1,
-                     uint32_t columns,
-                     uint32_t rows_2) = 0;      
+    virtual CUDA_FUNCTION_CALL_ERROR RegisterInputOutput(Tensor* input_1, 
+                                                        Tensor*  input_2, 
+                                                        Tensor*  output
+                                                        ) = 0; 
 
     virtual CUDA_FUNCTION_CALL_ERROR GetOutput() = 0;
 
-    virtual CUDA_FUNCTION_CALL_ERROR RuntimeEnqueue() = 0;
     
     virtual ~ElementWiseOp(){}
 };
@@ -73,25 +68,18 @@ public:
 class VectorAdd : public ElementWiseOp
 {
 public:
+    CUDA_FUNCTION_CALL_ERROR Enqueue();
+    
     virtual CUDA_ELEMENTWISE_OP_RETURN_TYPE ElementWiseImpl() override final;
 
-    virtual CUDA_FUNCTION_CALL_ERROR RegisterInputOutput(std::vector<ElementType> input_1, 
-                                                        std::vector<ElementType>  input_2, 
-                                                        ElementType*  output,
-                                                        uint32_t ElementNum) override final;
-
-    virtual CUDA_FUNCTION_CALL_ERROR RegisterInputOutput( ElementType* input_1,
-                     ElementType* input_2,
-                     ElementType* output,
-                     uint32_t rows_1,
-                     uint32_t columns,
-                     uint32_t rows_2) override final {return kCUDA_CALL_INVALID;}
+    virtual CUDA_FUNCTION_CALL_ERROR RegisterInputOutput(Tensor* input_1, 
+                                                        Tensor*  input_2, 
+                                                        Tensor*  output) override final;
 
     virtual CUDA_FUNCTION_CALL_ERROR GetOutput() override final;
 
-    CUDA_FUNCTION_CALL_ERROR Enqueue();
 
-    virtual CUDA_FUNCTION_CALL_ERROR RuntimeEnqueue() override final;
+    virtual CUDA_FUNCTION_CALL_ERROR ElementWiseRuntimeEnqueueImpl() override final;
 
     CUDA_FUNCTION_CALL_ERROR compileFileToBC(const std::string &cu_file_name, 
                                                     char** ptxResult, 
@@ -102,46 +90,31 @@ public:
 
 
 private:
-    std::vector<ElementType> input_1_;
-    std::vector<ElementType> input_2_;
-    ElementType* output_;
-    uint32_t ElementNum_;
+    Tensor*  input_1_;
+    Tensor*  input_2_;
+    Tensor*  output_;
 };
 
 class MatMul : public ElementWiseOp{
 public:
+    CUDA_FUNCTION_CALL_ERROR Enqueue();
+
     virtual CUDA_ELEMENTWISE_OP_RETURN_TYPE ElementWiseImpl() override final;
 
-    virtual CUDA_FUNCTION_CALL_ERROR RegisterInputOutput(std::vector<ElementType> input_1, 
-                                                        std::vector<ElementType>  input_2, 
-                                                        ElementType*  output,
-                                                        uint32_t ElementNum) override final
-    {
-        return kCUDA_CALL_INVALID;
-    }
-
-    virtual CUDA_FUNCTION_CALL_ERROR RegisterInputOutput( ElementType* input_1,
-                     ElementType* input_2,
-                     ElementType* output,
-                     uint32_t rows_1,
-                     uint32_t columns,
-                     uint32_t rows_2) override final;
+    virtual CUDA_FUNCTION_CALL_ERROR RegisterInputOutput(Tensor* input_1, 
+                                                        Tensor*  input_2, 
+                                                        Tensor*  output) override final;
 
     virtual CUDA_FUNCTION_CALL_ERROR GetOutput() override final;      
 
-    CUDA_FUNCTION_CALL_ERROR Enqueue();
 
-    virtual CUDA_FUNCTION_CALL_ERROR RuntimeEnqueue() override final {return kCUDA_CALL_INVALID;}
+    virtual CUDA_FUNCTION_CALL_ERROR ElementWiseRuntimeEnqueueImpl() override final {return kCUDA_CALL_INVALID;}
 
     virtual ~MatMul() override final {}
 private:
-    // dim3 shape_;
-    ElementType* input_1_;
-    ElementType* input_2_;
-    ElementType* output_;
-    uint32_t rows_1_;
-    uint32_t rows_2_;
-    uint32_t columns_;
+    Tensor*  input_1_;
+    Tensor*  input_2_;
+    Tensor*  output_;
 };
 } // namespace ElementWiseOp
 } // namespace test

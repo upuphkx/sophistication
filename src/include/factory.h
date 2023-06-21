@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "utils.h"
+#include "common.h"
 
 namespace test{
 namespace factory{

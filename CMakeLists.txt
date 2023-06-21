@@ -22,3 +22,6 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/test)
 
 install(TARGETS register
         DESTINATION ${CMAKE_BINARY_DIR}/lib)
+
+install(TARGETS main
+        DESTINATION ${CMAKE_BINARY_DIR}/bin)

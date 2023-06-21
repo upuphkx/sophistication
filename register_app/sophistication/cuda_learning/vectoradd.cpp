@@ -8,27 +8,27 @@ CUDA_ELEMENTWISE_OP_RETURN_TYPE VectorAdd::ElementWiseImpl(){
     return CUDA_ELEMENTWISE_SUCCESS;
 }
 
-CUDA_FUNCTION_CALL_ERROR VectorAdd::RegisterInputOutput(std::vector<ElementType> input_1, 
-                                                        std::vector<ElementType> input_2, 
-                                                        ElementType* output,
-                                                        uint32_t ElementNum)
+CUDA_FUNCTION_CALL_ERROR VectorAdd::RegisterInputOutput(Tensor* input_1, 
+                                                        Tensor*  input_2, 
+                                                        Tensor*  output)
 {
     input_1_ = input_1;
     input_2_ = input_2;
     output_ = output;
-    ElementNum_ = ElementNum;
     return kCUDA_CALL_SUCCESS;
 }
 
 CUDA_FUNCTION_CALL_ERROR VectorAdd::GetOutput(){
-    for (int i = 0 ; i < this->ElementNum_ ; i++){
-        Log::LogMessage<ElementType>(this->output_[i]);
+    Log::LogMessage(this->output_->getELementNum());
+    float* buffer = reinterpret_cast<float*>(this->output_->getBuffer());
+    for (int i = 0 ; i < this->output_->getELementNum() ; i++){
+        Log::LogMessage(buffer[i]);
     }
     return kCUDA_CALL_SUCCESS;
 }
 
 CUDA_FUNCTION_CALL_ERROR VectorAdd::Enqueue(){
-    CallVectorAddKernelFunction(this->input_1_, this->input_2_, this->output_, this->ElementNum_);
+    CallVectorAddKernelFunction(this->input_1_, this->input_2_, this->output_);   
     return kCUDA_CALL_SUCCESS;
 }
 
@@ -81,7 +81,7 @@ CUDA_FUNCTION_CALL_ERROR VectorAdd::loadBC(char* ptx, CUmodule& module){
     return kCUDA_CALL_SUCCESS;
 }
 
-CUDA_FUNCTION_CALL_ERROR VectorAdd::RuntimeEnqueue(){
+CUDA_FUNCTION_CALL_ERROR VectorAdd::ElementWiseRuntimeEnqueueImpl(){
     std::string cu_file_name = "./vector_add.cu";
     char* ptxResult;
     size_t ptxResultSize;
