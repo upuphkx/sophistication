@@ -16,3 +16,21 @@ void testMatMul(){
     SAFE_DELETE_PTR(cuda_matmul_api);
     Log::LogMessage<std::string>("[TEST CUDA MatMul PROGRAMING ENDING]");
 }
+
+TEST(CUDA, MatMul)
+{
+    test::ElementWiseOp::ElementWiseOp* cuda_matmul_api = static_cast<test::ElementWiseOp::ElementWiseOp*>(Factory::get_instance("MatMul")());
+    // cuda_matmul_api->RuntimeEnqueue();
+    float A[] = {1,1,1,1,1,1,1,1,1};
+    std::vector<uint32_t> s {3, 3};
+    Shape shape(s);
+    Tensor input_1(&shape, A);
+    cuda_matmul_api->RegisterInputOutput(&input_1, &input_1, &input_1);
+    // cuda_matmul_api->GetOutput();
+    cuda_matmul_api->ElementWiseImpl();
+    // cuda_matmul_api->GetOutput();
+    auto error = cuda_matmul_api->ElementWiseImpl();
+    EXPECT_EQ(error, test::ElementWiseOp::CUDA_ELEMENTWISE_OP_RETURN_TYPE::CUDA_ELEMENTWISE_SUCCESS);
+    SAFE_DELETE_PTR(cuda_matmul_api);
+
+}

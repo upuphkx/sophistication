@@ -2,13 +2,13 @@ cmake_minimum_required(VERSION 3.18)
 project(register_base_code LANGUAGES CXX CUDA)
 
 find_package(CUDAToolkit REQUIRED)
-message("-- CUDA INCLUIDE DIR: " ${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES})
+find_package(GTest REQUIRED)
+message(STATUS "CUDA INCLUDE DIR: " ${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES})
 
 include_directories(${CMAKE_SOURCE_DIR}/include
                 ${CMAKE_SOURCE_DIR}/src/include
                 ${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES})                  
 
-link_libraries("/usr/local/cuda-10.0/lib64/stubs/")
 
 file(GLOB_RECURSE REGISTER_LIB_SRC  ${CMAKE_SOURCE_DIR}/src/*.cpp 
                                 ${CMAKE_SOURCE_DIR}/register_app/*.cpp
