@@ -1,4 +1,4 @@
-#include "test_register_function.h"
+#include "internal_include/test_register_function.h"
 
 namespace test{
 namespace test{

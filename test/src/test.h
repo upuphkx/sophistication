@@ -5,6 +5,7 @@
 
 #include "register_app.h"
 using namespace test::factory;
+
 void testBitOp();
 void testVectorAdd();
 void testCUFFT();

@@ -6,11 +6,12 @@ find_package(GTest REQUIRED)
 message(STATUS "CUDA INCLUDE DIR: " ${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES})
 
 include_directories(${CMAKE_SOURCE_DIR}/include
+                ${CMAKE_SOURCE_DIR}/register_app
                 ${CMAKE_SOURCE_DIR}/src/include
                 ${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES})                  
 
 
-file(GLOB_RECURSE REGISTER_LIB_SRC  ${CMAKE_SOURCE_DIR}/src/*.cpp 
+file(GLOB_RECURSE REGISTER_LIB_SRC ${CMAKE_SOURCE_DIR}/src/*.cpp 
                                 ${CMAKE_SOURCE_DIR}/register_app/*.cpp
                                 ${CMAKE_SOURCE_DIR}/register_app/*.cu)
 
@@ -22,6 +23,3 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/test)
 
 install(TARGETS register
         DESTINATION ${CMAKE_BINARY_DIR}/lib)
-
-install(TARGETS main
-        DESTINATION ${CMAKE_BINARY_DIR}/bin)

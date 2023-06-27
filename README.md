@@ -1,4 +1,5 @@
-# this project is how to use cpp register
+# Cpp and Cuda usage project with cpp register code base
 * cplusplus cuda programming
-g++ -fPIC -shared -o libregister.so factory/factory.cpp register/register.cpp test/test.cpp
-g++ -o main main.cpp -L . -l register
+* simple c++ programming usage
+* cufft api test
+* todo(cublas curandom)

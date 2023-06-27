@@ -1,5 +1,4 @@
-#include "cufft_api_test.h"
-
+#include "internal_include/cufft_api_test.h"
 namespace test{
 namespace cufft_api{
 TESTCUFFTAPIRETURNSTATUS cufft3DMGPUR2CC2RTest::cufftAPIImpl(const uint32_t& n,

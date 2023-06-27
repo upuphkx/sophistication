@@ -4,7 +4,7 @@
 #include <iostream>
 #include <memory>
 
-#include "utils.h"
+#include "static.h"
 #include "common.h"
 
 namespace test{

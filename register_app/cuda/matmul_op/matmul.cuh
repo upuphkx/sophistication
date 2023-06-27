@@ -1,6 +1,6 @@
 #ifndef __TEST_CUDA_LEARNING_MATMUL_H
 #define __TEST_CUDA_LEARNING_MATMUL_H
-#include "element_op.h"
+#include "internal_include/element_op.h"
 
 void callMatMulKernel(Tensor* A,
                         Tensor* B,

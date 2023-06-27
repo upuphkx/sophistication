@@ -1,4 +1,4 @@
-#include "cufft_api_test.h"
+#include "internal_include/cufft_api_test.h"
 
 namespace test{
 namespace cufft_api{
