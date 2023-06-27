@@ -8,7 +8,6 @@ add_executable(main ${test_src})
 
 add_dependencies(main register)
 
-
 target_link_libraries(main PRIVATE register ${GTEST_BOTH_LIBRARIES} 
                                                 ${CMAKE_THREAD_LIBS_INIT})
 
