@@ -11,7 +11,7 @@ TESTCUFFTAPIRETURNSTATUS cufft1DC2CTest::cufftAPIImpl(const uint32_t& n,
     uint32_t fft_size = batch_size * n;
     std::vector<data_type> data(fft_size);
     // Log::LogMessage<std::string>("Input array:");
-    for (int32_t i = 0 ; i < fft_size ; i++){
+    for (uint32_t i = 0 ; i < fft_size ; i++){
         data[i] = data_type(i ,-i);
         // Log::LogMessage<data_type>(data[i]);
     }

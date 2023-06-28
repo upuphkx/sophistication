@@ -16,9 +16,10 @@ BITOPERATERSTATUS BitWiseAndOp::BitWiseAndOpImpl(std::vector<int32_t>& input){
 
 BITOPERATERSTATUS BitWiseAndOp::operator()(std::vector<int32_t> input) {
     BitWiseAndOpImpl(input);
+    return kSUCCESS;
 }
 
- BitWiseAndOp::~BitWiseAndOp(){}
+BitWiseAndOp::~BitWiseAndOp(){}
 
 BITOPERATERSTATUS BitWiseOrOp::BitWiseOrOpImpl(std::vector<int32_t>& input){
     if ((int32_t)(input[0] | input[1]) == input[2]){
@@ -30,6 +31,7 @@ BITOPERATERSTATUS BitWiseOrOp::BitWiseOrOpImpl(std::vector<int32_t>& input){
 
 BITOPERATERSTATUS BitWiseOrOp::operator()(std::vector<int32_t> input)  {
     BitWiseOrOpImpl(input);
+    return kSUCCESS;    
 }
 
 BitWiseOrOp::~BitWiseOrOp(){}
@@ -44,6 +46,7 @@ BITOPERATERSTATUS BitWiseXOROp::BitWiseXOROpImpl(std::vector<int32_t>& input){
 
 BITOPERATERSTATUS BitWiseXOROp::operator()(std::vector<int32_t> input)  {
     BitWiseXOROpImpl(input);
+    return kSUCCESS;    
 }
 
  BitWiseXOROp::~BitWiseXOROp(){}
@@ -58,6 +61,7 @@ BITOPERATERSTATUS BitWiseNOTOp::BitWiseNOTOpImpl(std::vector<int32_t>& input){
 
 BITOPERATERSTATUS BitWiseNOTOp::operator()(std::vector<int32_t> input)  {
     BitWiseNOTOpImpl(input);
+    return kSUCCESS;    
 }
 
  BitWiseNOTOp::~BitWiseNOTOp(){}

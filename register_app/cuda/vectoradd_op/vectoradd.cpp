@@ -21,7 +21,7 @@ CUDA_FUNCTION_CALL_ERROR VectorAdd::RegisterInputOutput(Tensor* input_1,
 CUDA_FUNCTION_CALL_ERROR VectorAdd::GetOutput(){
     Log::LogMessage(this->output_->getELementNum());
     float* buffer = reinterpret_cast<float*>(this->output_->getBuffer());
-    for (int i = 0 ; i < this->output_->getELementNum() ; i++){
+    for (uint32_t i = 0 ; i < this->output_->getELementNum() ; i++){
         Log::LogMessage(buffer[i]);
     }
     return kCUDA_CALL_SUCCESS;

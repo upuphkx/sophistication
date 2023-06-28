@@ -13,7 +13,7 @@ TESTCUFFTAPIRETURNSTATUS cufft1DR2CTest::cufftAPIImpl(const uint32_t& n, const u
     std::vector<input_type> input(fft_size);
     std::vector<data_type> output(static_cast<uint32_t>((fft_size / 2 + 1)));
     // Log::LogMessage<std::string>("Input array:");
-    for (int i = 0 ; i < fft_size ; i++){
+    for (uint32_t i = 0 ; i < fft_size ; i++){
         input[i] = static_cast<input_type>(i);
         // Log::LogMessage<input_type>(input[i]);
     }

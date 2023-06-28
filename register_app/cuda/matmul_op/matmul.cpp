@@ -21,7 +21,7 @@ CUDA_FUNCTION_CALL_ERROR MatMul::RegisterInputOutput(Tensor* input_1,
 CUDA_FUNCTION_CALL_ERROR MatMul::GetOutput(){
     using type = float;
     uint32_t element_num = this->output_->getELementNum();
-    for (int i = 0 ; i < element_num ; i++){    
+    for (uint32_t i = 0 ; i < element_num ; i++){    
         Log::LogMessage(reinterpret_cast<type*>(output_->getBuffer())[i]);
     }
     return kCUDA_CALL_SUCCESS;

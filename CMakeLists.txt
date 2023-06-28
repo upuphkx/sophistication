@@ -1,8 +1,10 @@
 cmake_minimum_required(VERSION 3.18)
 project(register_base_code LANGUAGES CXX CUDA)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror -Wno-error=unused-parameter")
+
 find_package(CUDAToolkit REQUIRED)
-# find_package(GTest)
+find_package(GTest)
 
 if(${GTest_FOUND})
 else()

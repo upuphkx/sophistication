@@ -125,7 +125,7 @@ TESTCUFFTAPIRETURNSTATUS cufft1DMGPUC2CTest::cufftAPIImpl(const uint32_t& n,
         ref += std::norm(data_out_reference[i]);
     };
 
-    double l2_error = (ref == 0.0) ? std::sqrt(error) : std::sqrt(error) / std::sqrt(ref);
+    // double l2_error = (ref == 0.0) ? std::sqrt(error) : std::sqrt(error) / std::sqrt(ref);
     // if (l2_error < 0.001) {
     //     std::cout << "PASSED with L2 error = " << l2_error << std::endl;
     // } else {
