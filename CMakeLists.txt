@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.18)
 project(register_base_code LANGUAGES CXX CUDA)
 
+message(STATUS "CMAKE_COMMAND_BIN: " ${CMAKE_COMMAND})
+
+set(CMAKE_BUILD_TYPE "Debug")
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror -Wno-error=unused-parameter")
 
 find_package(CUDAToolkit REQUIRED)
@@ -46,5 +50,8 @@ target_link_libraries(register PRIVATE CUDA::cufft CUDA::cudart CUDA::nvrtc cuda
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/test)
 
+include(cmake/install.cmake)
+
 install(TARGETS register
-        DESTINATION ${CMAKE_BINARY_DIR}/lib)
+        DESTINATION ${CMAKE_BINARY_DIR}/lib
+        COMPONENT base)

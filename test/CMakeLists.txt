@@ -16,4 +16,5 @@ target_link_libraries(main PRIVATE register ${GTEST_BOTH_LIBRARIES}
                                                 ${CMAKE_THREAD_LIBS_INIT})
 
 install(TARGETS main
-        DESTINATION ${CMAKE_BINARY_DIR}/bin)        
+        DESTINATION ${CMAKE_BINARY_DIR}/bin
+        COMPONENT base)        

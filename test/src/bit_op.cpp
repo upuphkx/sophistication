@@ -22,7 +22,7 @@ TEST(SIMPLE_TEST, BitOp)
     for (auto ptr : bit_op_manager->BasePtrVector_)
     {
         auto error = (*ptr)(input);
-        EXPECT_EQ(error, 0);
+        EXPECT_EQ(error, kSUCCESS);
         break;
     }
     delete bit_op_manager;
